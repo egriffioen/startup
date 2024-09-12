@@ -21,3 +21,4 @@ Useful git commands
 
 A merge conflict will happen if the same line of code is edited on 2 different ends and those changes are commited.
 
+https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax --> a helpful link on making these notes "pretty"
