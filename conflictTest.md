@@ -5,7 +5,7 @@ I am writing words to test a conflict
 lol, ahahaha, guurrrlllll
 
 bruh
-HI! I'm buddy the elf
+WHAT IS THE PURPOSE OF LIFE
 buckets
 
 making a modification in github step 3
