@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <!-- Tell browsers not to scale the viewport automatically -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Hiking Adventure</title>
+    <title>Profile</title>
   </head>
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
@@ -27,19 +27,16 @@
     </header>
 
     <main>
-      <h1>Hello World!</h1>
-      <form method="get" action="myprofile.html">
-        <div>
-          <span>@</span>
-          <input type="text" placeholder="username" />
-        </div>
-        <div>
-          <span>🔒</span>
-          <input type="password" placeholder="password" />
-        </div>
-        <button type="submit">Login</button>
-        <button type="submit">Create</button>
-      </form>
+      <div class="players">
+        Player:
+        <span class="player-name">Mystery player</span>
+      </div>
+      <ul class="notification">
+        <li class="player-name">Tim started a new game</li>
+        <li class="player-name">Ada started a new game</li>
+        <li class="player-name">Tim scored 337</li>
+      </ul>
+      <br />
     </main>
 
     <footer>
