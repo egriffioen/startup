@@ -27,7 +27,9 @@
     </header>
 
     <main>
-      <form action="myprofile.html" method="post">
+      <h3>Add To Your Adventure Log:</h3>
+      <!--METHOD SHOULD BE CHANGED TO POST WHEN WE DO THE BACKEND-->
+      <form action="myprofile.html" method="get" enctype="multipart/form-data">
             <label for="name-of-hike">Name Of Hike: </label>
             <input type="text" id="name-of-hike" name="varText" placeholder="Hike Name" />
             <br /><br />
@@ -48,6 +50,32 @@
             <br /><br />
             <label for="datetime">Date of Hike: </label>
             <input type="datetime-local" name="varDatetime" id="datetime" />
+            <br /><br />
+            <label for="start-time">Start Time: </label>
+            <input type="time" name="start-time" id="start-time" />
+            <label for="end-time">End Time: </label>
+            <input type="time" name="end-time" id="end-time" />
+            <fieldset>
+              <legend>Rating</legend>
+              <label for="rating1">1 Star</label>
+              <input type="radio" id="rating1" name="varRating" value="rating1" />
+              <label for="rating2">2 Stars</label>
+              <input type="radio" id="rating2" name="varRating" value="rating2" />
+              <label for="rating3">3 Stars</label>
+              <input type="radio" id="rating3" name="varRating" value="rating3" />
+              <label for="rating4">4 Stars</label>
+              <input type="radio" id="rating4" name="varRating" value="rating4" />
+              <label for="rating5">5 Stars</label>
+              <input type="radio" id="rating5" name="varRating" value="rating5" />
+            </fieldset>
+            <br />
+            <label for="journal-entry">Journal Entry: </label>
+            <textarea id="journal-entry" name="journal-entry"></textarea>
+            <br /><br />
+            <label for="picture">Upload Photos:</label><br>
+            <input type="file" id="picture" name="picture" accept="image/*" multiple>
+            <br /><br />
+            <button type="submit">Submit</button>
       </form>
     </main>
 
