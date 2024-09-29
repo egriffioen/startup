@@ -27,16 +27,21 @@
     </header>
 
     <main>
-      <div class="players">
-        Player:
-        <span class="player-name">Mystery player</span>
-      </div>
-      <ul class="notification">
-        <li class="player-name">Tim started a new game</li>
-        <li class="player-name">Ada started a new game</li>
-        <li class="player-name">Tim scored 337</li>
-      </ul>
-      <br />
+      <form action="myprofile.html" method="post">
+            <label for="name-of-hike">Name Of Hike: </label>
+            <input type="text" id="name-of-hike" name="varText" placeholder="Hike Name" />
+            <fieldset>
+              <legend>Difficulty</legend>
+              <label for="easy">Easy</label>
+              <input type="radio" id="easy" name="varDifficulty" value="Easy" />
+              <label for="intermediate">Intermediate</label>
+              <input type="radio" id="intermediate" name="varDifficulty" value="Intermediate" />
+              <label for="advanced">Advanced</label>
+              <input type="radio" id="advanced" name="varDifficulty" value="Advanced" />
+              <label for="expert">Expert</label>
+              <input type="radio" id="expert" name="varDifficulty" value="Expert" />
+            </fieldset>
+      </form>
     </main>
 
     <footer>
