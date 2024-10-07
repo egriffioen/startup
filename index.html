@@ -48,17 +48,18 @@
       <div id="picture" class="picture-box"><img class="img-fluid rounded"  width="500px" src="https://images.pexels.com/photos/9754/mountains-clouds-forest-fog.jpg?auto=compress&cs=tinysrgb&w=800" alt="Forest Image" /></div>
       <form method="get" action="myprofile.html">
         <div>Login to explore:</div>
-        <div>
-            <span>Username</span>
-          <input type="text" placeholder="username" />
+        <div class="input-group mb-3">
+          <span class="input-group-text">Username</span>
+          <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
         </div>
-        <div>
-            <span>Password</span>
-          <input type="password" placeholder="password" />
+        <div class="input-group mb-3">
+            <span class="input-group-text">Password</span>
+          <input type="password" class="form-control" placeholder="Enter password" />
         </div>
         <button type="submit" class="btn bg-dark-green">Login</button>
         <button type="submit" class="btn bg-dark-green">Create</button>
         <button type="submit" class="btn bg-dark-green">Forgot Password</button>
+        </div>
       </form>
       <div>
         API of Current Weather will go here
