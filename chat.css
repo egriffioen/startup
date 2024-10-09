@@ -24,3 +24,9 @@ main .chatborder{
 main .chatheader{
     text-align: left;
 }
+
+.varela-round-regular {
+    font-family: "Varela Round", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}  
