@@ -62,21 +62,29 @@
         <li>Jounral: Good hike, felt very steep, but loved the views of BYU campus</li>
         <div id="ymountianview" class="journalphoto"><img width="200px" src="https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvODE5MzIxMjkvM2UzNmFiZWQwNTAwOTQ3ZTNjMjlmMGIwOThkYzNiZmIuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJqcGVnIiwicmVzaXplIjp7IndpZHRoIjo1MDAsImhlaWdodCI6NTAwLCJmaXQiOiJpbnNpZGUifSwicm90YXRlIjpudWxsLCJqcGVnIjp7InRyZWxsaXNRdWFudGlzYXRpb24iOnRydWUsIm92ZXJzaG9vdERlcmluZ2luZyI6dHJ1ZSwib3B0aW1pc2VTY2FucyI6dHJ1ZSwicXVhbnRpc2F0aW9uVGFibGUiOjN9fX0="></div>
       </div>
-      <h3>Add To Your Adventure Log:</h3>
       <!--METHOD SHOULD BE CHANGED TO POST WHEN WE DO THE BACKEND-->
       <form class="container hikerlogform" action="myprofile.html" method="get" enctype="multipart/form-data">
+        <h3>Add To Your Adventure Log:</h3>
             <label for="name-of-hike">Name Of Hike: </label>
             <input type="text" class="form-control" id="name-of-hike" name="varText" placeholder="Hike Name" />
             <fieldset>
               <legend>Difficulty</legend>
-              <label for="easy">Easy</label>
-              <input type="radio" id="easy" name="varDifficulty" value="Easy" />
-              <label for="intermediate">Intermediate</label>
-              <input type="radio" id="intermediate" name="varDifficulty" value="Intermediate" />
-              <label for="advanced">Advanced</label>
-              <input type="radio" id="advanced" name="varDifficulty" value="Advanced" />
-              <label for="expert">Expert</label>
-              <input type="radio" id="expert" name="varDifficulty" value="Expert" />
+              <div class="form-check">
+                <label for="easy" class="form-check-label">Easy</label>
+                <input type="radio" id="easy" class="form-check-input" name="varDifficulty" value="Easy" />
+              </div>
+              <div class="form-check">
+                <label for="intermediate" class="form-check-label">Intermediate</label>
+                <input type="radio" id="intermediate" class="form-check-input" name="varDifficulty" value="Intermediate" />
+              </div>
+              <div class="form-check">
+                <label for="advanced" class="form-check-label">Advanced</label>
+                <input type="radio" id="advanced" class="form-check-input" name="varDifficulty" value="Advanced" />
+              </div>
+              <div class="form-check">
+                <label for="expert" class="form-check-label">Expert</label>
+                <input type="radio" id="expert" class="form-check-input" name="varDifficulty" value="Expert" />
+              </div>
             </fieldset>
             <label for="Distance">Distance: </label>
             <input type="number" class="form-control" name="distance" id="distance" min="0" step="0.5" placeholder="miles" />
@@ -88,16 +96,26 @@
             <input type="time" class="form-control" name="end-time" id="end-time" />
             <fieldset>
               <legend>Rating</legend>
-              <label for="rating1">1 Star</label>
-              <input type="radio" id="rating1" name="varRating" value="rating1" />
-              <label for="rating2">2 Stars</label>
-              <input type="radio" id="rating2" name="varRating" value="rating2" />
-              <label for="rating3">3 Stars</label>
-              <input type="radio" id="rating3" name="varRating" value="rating3" />
-              <label for="rating4">4 Stars</label>
-              <input type="radio" id="rating4" name="varRating" value="rating4" />
-              <label for="rating5">5 Stars</label>
-              <input type="radio" id="rating5" name="varRating" value="rating5" />
+              <div class="form-check">
+                <label for="rating1" class="form-check-label">1 Star</label>
+                <input type="radio" id="rating1" class="form-check-input" name="varRating" value="rating1" />
+              </div>
+              <div class="form-check">
+                <label for="rating2" class="form-check-label">2 Stars</label>
+                <input type="radio" id="rating2" class="form-check-input" name="varRating" value="rating2" />
+              </div>
+              <div class="form-check">
+                <label for="rating3" class="form-check-label">3 Stars</label>
+                <input type="radio" id="rating3" class="form-check-input" name="varRating" value="rating3" />
+              </div>
+              <div class="form-check">
+                <label for="rating4" class="form-check-label">4 Stars</label>
+                <input type="radio" id="rating4" class="form-check-input" name="varRating" value="rating4" />
+              </div>
+              <div class="form-check">
+                <label for="rating5" class="form-check-label">5 Stars</label>
+                <input type="radio" id="rating5" class="form-check-input" name="varRating" value="rating5" />
+              </div>
             </fieldset>
             <label for="journal-entry">Journal Entry: </label>
             <textarea id="journal-entry" class="form-control" name="journal-entry"></textarea>
