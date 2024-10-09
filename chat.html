@@ -49,49 +49,56 @@
 
     <main class="container-fluid bg-success text-center mt-5 pt-5 pb-3">
       <h2>CHAT GOES HERE (WebSocket Placeholder)</h2>
-      <p>
-        Peter: I heard about your hike to the Y! How was it?
-      </p>
-      <p>
-        You: It was awesome! Beautiful views and it was so good to do that hike with my sister.
-      </p>
-      <p>
-        Peter: That sounds fun! It's definitely a steep climb, but it's so satisfying when you get to the top
-      </p>
-    <hr />
-    <p>
-      You: Hey Emmet! I'm new here to Provo, and I'm looking to hike more. What has been one of your most 
-      memorable hikes?
-    </p>
-    <p>
-      Emmet: Welcome to Provo! Where did you move from? I love hiking here, the mountains are just breath taking.
-      I think one of the most memorable hikes was when my friends and I hiked Mount Timpanogos.
-    </p>
-    <hr />
+      <div class="container-fluid pt-4 row d-flex justify-content-center align-items-start">
+        <div class="container row col-md-5 chatborder d-flex justify-content-center align-items-center pb-4">
+          <span class="chatheader">Chatting with Peter</span>
+          <p class="container messageborder">
+            Peter: I heard about your hike to the Y! How was it?
+          </p>
+          <p class="container messageborder">
+            You: It was awesome! Beautiful views and it was so good to do that hike with my sister.
+          </p>
+          <p class="container messageborder">
+            Peter: That sounds fun! It's definitely a steep climb, but it's so satisfying when you get to the top
+          </p>
+        </div>
+        <div class="container row col-md-5 chatborder d-flex justify-content-center align-items-center">
+          <span class="chatheader">Chatting with Emmet</span>
+          <p class="container messageborder"> 
+            You: Hey Emmet! I'm new here to Provo, and I'm looking to hike more. What has been one of your most 
+            memorable hikes?
+          </p>
+          <p class="container messageborder">
+            Emmet: Welcome to Provo! Where did you move from? I love hiking here, the mountains are just breath taking.
+            I think one of the most memorable hikes was when my friends and I hiked Mount Timpanogos.
+          </p>
+        </div>
+      </div>
+      
       <h2>Explorer Hiking Status</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Hiker Level</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Terra Kingston</td>
-            <td>11</td>
-          </tr>
-          <tr>
-            <td>Emmet Elwood</td>
-            <td>25</td>
-          </tr>
-          <tr>
-            <td>Peter Harlow</td>
-            <td>3</td>
-          </tr>
-        </tbody>
-      </table>
-      <div id="hiking-success" class="picture-box"><img width="250px" src="https://generated-assets.prod.myninja.ai/cc175cdb-530a-4424-834b-6924d1b22015/19586508-c35b-4421-bda4-46c30a0bec6c_0.jpeg"/></div>
+        <table class="table table-bordered text-white container hikerscoretable">
+          <thead class="bg-dark-green" >
+            <tr>
+              <th>Name</th>
+              <th>Hiker Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Terra Kingston</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>Emmet Elwood</td>
+              <td>25</td>
+            </tr>
+            <tr>
+              <td>Peter Harlow</td>
+              <td>3</td>
+            </tr>
+          </tbody>
+        </table>
+      <!--<div id="hiking-success" class="picture-box"><img width="250px" src="https://generated-assets.prod.myninja.ai/cc175cdb-530a-4424-834b-6924d1b22015/19586508-c35b-4421-bda4-46c30a0bec6c_0.jpeg"/></div> -->
     </main>
 
     <footer>
