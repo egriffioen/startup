@@ -7,3 +7,9 @@ main .hikerlogform{
     border: 5px solid #386746;
     padding: 20px;
 }
+
+main .examplepost{
+    border: 5px solid #386746;
+    margin: 40px;
+    padding: 20px;
+}
