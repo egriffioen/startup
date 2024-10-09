@@ -48,3 +48,13 @@ I built the structure of my web program using HTML
 - **Login** - Input box for username and password were implemented, along with a login, create, and forgot password button
 - **Database** - The posts each hiker creates will be stored in a database. An example post was created, along with the form for hikers to input the data relating to their hike.
 - **WebSocket** - A live chat has a placeholder for now, along with the hiking level of the users, which will eventually be updated in real time.
+
+## CSS deliverable
+For this deliverable I used CSS and Bootstrap to style the application.
+
+- **Header, footer, and main content body** - All were formatting with a nav bar, cleaner footer, and main content was organized
+- **Navigation elements** - The links no longer have underlines They are in a horizontal formal and collapse into a toggle bar when the screen is small.
+- **Responsive to window resizing** - Everything was resized and flexible to different screen sizes
+- **Application elements** - Made them look cleaner with better spacing and style
+- **Application text content** - Added a font, and styled text with borders or containers
+- **Application images** - Rounded the images and made them fluid to different screen sizes
