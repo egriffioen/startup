@@ -15,7 +15,7 @@ main .hikerlogform{
 }
 
 main .examplepost{
+    max-width: 600px;
     border: 5px solid #386746;
-    margin: 40px;
     padding: 20px;
 }
