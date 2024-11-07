@@ -1,0 +1,15 @@
+{
+  "name": "startup",
+  "version": "1.0.0",
+  "description": "Are you tired of forgetting the most memorable moments from your favorite hikes? Do you wish you could be more connected with your hiking buddies? With this website you will be able to clearly log your favority memories about the hike, the difficulty, the mileage, how long it took you, and your overall rating of the hike on a 1-10 scale. The more hikes you go on, the higher \"level\" hiker you become. You will also be able to see your friends hiking levels and chat with them about your treacherous adventures. Go say hello to the world and never let another memory slip by.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.4.10"
+  }
+}
