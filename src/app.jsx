@@ -1,10 +1,15 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 import './app.css';
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Login } from './login/login';
+import { MyProfile } from './myprofile/myprofile';
+import { Chat } from './chat/chat';
+import { About } from './about/about';
 
 export default function App() {
   return (
+  <BrowserRouter>
   <div  className="body bg-dark-green text-light varela-round-regular">
     <header className="container-fluid">
       <nav className="navbar navbar-expand-sm bg-dark-green navbar-light">
@@ -51,5 +56,6 @@ export default function App() {
     </footer>
     {/*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>*/}
   </div>
+  </BrowserRouter>
   );
 }
