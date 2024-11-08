@@ -38,7 +38,13 @@ export default function App() {
       </nav>
     </header>
 
-    <main className="bg-success">App components go here</main>
+    <Routes>
+        <Route path='/' element={<Login />} exact />
+        <Route path='/myprofile' element={<MyProfile />} />
+        <Route path='/chat' element={<Chat />} />
+        <Route path='/about' element={<About />} />
+        <Route path='*' element={<NotFound />} />
+    </Routes>
 
     <footer className="footer">
       <div className="container-fluid mt-1 mb-2">
@@ -59,3 +65,7 @@ export default function App() {
   </BrowserRouter>
   );
 }
+
+function NotFound() {
+    return <main className='container-fluid bg-success text-center'>404: Return to sender. Address unknown.</main>;
+  }
