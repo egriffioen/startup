@@ -1,10 +1,8 @@
-footer .hikinglinks {
-    float: right;
-}
-
 main .hikerscoretable {
     max-width: 700px;
     padding: 20px;
+    background-color: #386746; /* Dark green color */
+    color: white;
 }
 
 main .messageborder{
@@ -30,3 +28,8 @@ main .chatheader{
     font-weight: 400;
     font-style: normal;
 }  
+
+.bg-dark-green {
+    background-color: #386746; /* Dark green color */
+    color: white;
+}

@@ -46,7 +46,7 @@ export default function App() {
         <Route path='*' element={<NotFound />} />
     </Routes>
 
-    <footer className="footer">
+    <footer className="footer bg-dark-green text-light">
       <div className="container-fluid mt-1 mb-2">
         <span className="text-reset">Author: Ella Griffioen</span>
         <a className="text-reset hikinglinks" href="https://github.com/egriffioen/startup">GitHub</a>
@@ -60,7 +60,7 @@ export default function App() {
         </div>
       </div>
     </footer>
-    {/*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>*/}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </div>
   </BrowserRouter>
   );

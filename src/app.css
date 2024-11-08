@@ -41,11 +41,6 @@ main .loginform{
     justify-content: space-around;
   }
   
-
-  footer {
-    flex: 0 30px;
-  }
-  
   menu {
     flex: 1;
     display: flex;
