@@ -12,7 +12,7 @@ export default function App() {
   <BrowserRouter>
   <div  className="body bg-dark-green text-light varela-round-regular">
     <header className="container-fluid">
-      <nav className="navbar navbar-expand-sm bg-dark-green navbar-light">
+      <nav className="navbar fixed-top navbar-expand-sm bg-dark-green navbar-light">
         <div className="container-fluid">
           <a className="navbar-brand text-white" href="#">My Hiking Adventure<sup>&reg;</sup></a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -21,16 +21,16 @@ export default function App() {
           <div className="collapse navbar-collapse" id="collapsibleNavbar">
             <menu className="navbar-nav me-auto">
               <li className="nav-item">
-                <a className="nav-link active text-white" href="index.html">Home</a>
+                <NavLink className="nav-link active text-white" to=''>Login</NavLink>
              </li>
               <li className="nav-item">
-                <a  className="nav-link text-white" href="myprofile.html">My Profile</a>
+                <NavLink  className="nav-link text-white" to='myprofile'>My Profile</NavLink>
               </li>
               <li className="nav-item">
-                <a  className="nav-link text-white" href="chat.html">Chat</a>
+                <NavLink  className="nav-link text-white" to='chat'>Chat</NavLink>
               </li>
               <li className="nav-item">
-                <a  className="nav-link text-white" href="about.html">About</a>
+                <NavLink  className="nav-link text-white" to='about'>About</NavLink>
               </li>
             </menu>
           </div>
