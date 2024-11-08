@@ -1,7 +1,14 @@
-main .hikerscoretable {
+.hikerscoretable th {
     max-width: 700px;
     padding: 20px;
     background-color: #386746; /* Dark green color */
+    color: white;
+}
+
+.hikerscoretable td {
+    max-width: 700px;
+    padding: 20px;
+    background-color: rgba(25, 135, 84, 1); /* Dark green color */
     color: white;
 }
 

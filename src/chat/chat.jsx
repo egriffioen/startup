@@ -33,7 +33,7 @@ export function Chat() {
       
       <h2>Explorer Hiking Status</h2>
         <table className="table table-bordered text-white container hikerscoretable">
-          <thead className="bg-dark-green" >
+          <thead>
             <tr>
               <th>Name</th>
               <th>Hiker Level</th>
