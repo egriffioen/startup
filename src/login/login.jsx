@@ -5,7 +5,7 @@ export function Login() {
     <main className="container-fluid bg-success text-center mt-5 pt-5 pb-3">
       <h1>Hello World!</h1>
       <div id="picture" className="picture-box"><img className="img-fluid rounded"  width="500px" src="https://images.pexels.com/photos/9754/mountains-clouds-forest-fog.jpg?auto=compress&cs=tinysrgb&w=800" alt="Forest Image" /></div>
-      <form method="get" className="container loginform" action="myprofile.html">
+      <form method="get" className="container loginform" action="/myprofile">
         <div className="mt-2 mb-3">Login to explore:</div>
           <div className="input-group mb-3">
             <span className="input-group-text">Username</span>
