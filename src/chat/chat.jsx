@@ -1,7 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './chat.css';
 
 export function Chat() {
+  const [allHikerStatus, setAllHikerStatus] = useState([]);
+  
+  // Get all users' hiker status from localStorage
+  useEffect(() => {
+    const allHikerStatusData = [];
+    
+    // Loop through all keys in localStorage
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      // If the key starts with 'hikerStatus_', it means it's a user's hiker status
+      if (key.startsWith('hikerStatus_')) {
+        const userName = key.replace('hikerStatus_', ''); // Remove 'hikerStatus_' to get the username
+        const hikerStatus = localStorage.getItem(key);  // Get hiker status for that user
+
+        if (hikerStatus) {
+          allHikerStatusData.push({
+            userName: userName,
+            hikerStatus: hikerStatus,
+          });
+        }
+      }
+    }
+    
+    // Set the state with the fetched data
+    setAllHikerStatus(allHikerStatusData);
+  }, []);
+
+  const hikerStatusRows = allHikerStatus.length > 0 ? (
+    allHikerStatus.map((hiker, index) => (
+      <tr key={index}>
+        <td>{hiker.userName.split('@')[0]}</td> {/* Get username without '@' */}
+        <td>{hiker.hikerStatus} Hikes Logged</td>
+      </tr>
+    ))
+  ) : (
+    <tr key="0">
+      <td colSpan="2">Be the first explorer!</td>
+    </tr>
+  );
+
   return (
     <main className="container-fluid bg-success text-center mt-5 pt-5 pb-3">
       <h2>CHAT GOES HERE (WebSocket Placeholder)</h2>
@@ -30,30 +70,19 @@ export function Chat() {
           </p>
         </div>
       </div>
-      
+
       <h2>Explorer Hiking Status</h2>
-        <table className="table table-bordered text-white container hikerscoretable">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Hiker Level</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Terra Kingston</td>
-              <td>11</td>
-            </tr>
-            <tr>
-              <td>Emmet Elwood</td>
-              <td>25</td>
-            </tr>
-            <tr>
-              <td>Peter Harlow</td>
-              <td>3</td>
-            </tr>
-          </tbody>
-        </table>
+      <table className="table table-bordered text-white container hikerscoretable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Hiker Level</th>
+          </tr>
+        </thead>
+        <tbody id="hikerStatus">
+          {hikerStatusRows}
+        </tbody>
+      </table>
     </main>
   );
 }

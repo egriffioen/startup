@@ -3,6 +3,7 @@ import './myprofile.css';
 
 export function MyProfile() {
   const userName = localStorage.getItem('userName');
+  
   // Initialize state with data from localStorage (if it exists), or an empty array if not
   const [hikeName, setHikeName] = useState('');
   const [difficulty, setDifficulty] = useState('');
@@ -17,30 +18,26 @@ export function MyProfile() {
     return storedLog ? JSON.parse(storedLog) : [];
   });
 
+  // Function to calculate hiker status as the length of the hike log
+  const calculateHikerStatus = (log) => log.length;
+
   // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form from reloading the page
+    e.preventDefault();
 
-    // Create a new post with the current state values
-    const newHike = {
-      hikeName,
-      difficulty,
-      distance,
-      date,
-      startTime,
-      endTime,
-      rating,
-      journal,
-    };
+    // Create a new hike object
+    const newHike = { hikeName, difficulty, distance, date, startTime, endTime, rating, journal };
 
-    // Add the new hike to the hike log
+    // Update the hike log and store it in localStorage
     const updatedLog = [...hikeLog, newHike];
     setHikeLog(updatedLog);
-
-    // Save the updated log to localStorage
     localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(updatedLog));
 
-    // Clear the form after submission
+    // Calculate new hiker status and store it in localStorage
+    const newHikerStatus = calculateHikerStatus(updatedLog);
+    localStorage.setItem(`hikerStatus_${userName}`, newHikerStatus);
+
+    // Clear the form fields
     setHikeName('');
     setDifficulty('');
     setDistance('');
@@ -51,11 +48,9 @@ export function MyProfile() {
     setJournal('');
   };
 
-  // Effect to update localStorage whenever hikeLog changes
   useEffect(() => {
-    if (hikeLog.length > 0) {
-      localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(hikeLog));
-    }
+    // Keep the hike log in sync with localStorage
+    localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(hikeLog));
   }, [hikeLog, userName]);
 
   return (

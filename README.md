@@ -61,12 +61,12 @@ For this deliverable I used CSS and Bootstrap to style the application.
 
 
 ## REACT deliverable
-For this deliverable I ported my project into React and used javascript to create an authenticated login.
+For this deliverable I ported my project into React and used javascript so that the page is more interactive with the user
 
 - **Bundled and transpiled** - Ported all the html and css to react!
 - **Components** - Login, myprofile, chat, and about are all components with mocks for login.
   - **login** - Login uses some react so that you have to add a username and password to login. There is also a seperate authenticated and unauthenticated page.
-  - **database** - Mock for the profile data and mock hiker scores.
-  - **WebSocket** - Mock chat is used.
+  - **database** - Mock for the profile data and mock hiker scores. Users can fill out the form and see the submitted form for the hikes they have done. It is specific to the user.
+  - **WebSocket** - Mock chat is used. Hiker Level table will show all users and the number of hikes they have logged on the local data
 - **Router** - Routing between login, myprofile, chat and about pages.
-- **Hooks** - Uses hooks with the login authentication
+- **Hooks** - Uses hooks with the login authentication and for the myprofile adventure log and hiker level table
