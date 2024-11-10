@@ -1,81 +1,199 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './myprofile.css';
 
 export function MyProfile() {
+  const userName = localStorage.getItem('userName');
+  // Initialize state with data from localStorage (if it exists), or an empty array if not
+  const [hikeName, setHikeName] = useState('');
+  const [difficulty, setDifficulty] = useState('');
+  const [distance, setDistance] = useState('');
+  const [date, setDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [rating, setRating] = useState('');
+  const [journal, setJournal] = useState('');
+  const [hikeLog, setHikeLog] = useState(() => {
+    const storedLog = localStorage.getItem(`hikeLog_${userName}`);
+    return storedLog ? JSON.parse(storedLog) : [];
+  });
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form from reloading the page
+
+    // Create a new post with the current state values
+    const newHike = {
+      hikeName,
+      difficulty,
+      distance,
+      date,
+      startTime,
+      endTime,
+      rating,
+      journal,
+    };
+
+    // Add the new hike to the hike log
+    const updatedLog = [...hikeLog, newHike];
+    setHikeLog(updatedLog);
+
+    // Save the updated log to localStorage
+    localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(updatedLog));
+
+    // Clear the form after submission
+    setHikeName('');
+    setDifficulty('');
+    setDistance('');
+    setDate('');
+    setStartTime('');
+    setEndTime('');
+    setRating('');
+    setJournal('');
+  };
+
+  // Effect to update localStorage whenever hikeLog changes
+  useEffect(() => {
+    if (hikeLog.length > 0) {
+      localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(hikeLog));
+    }
+  }, [hikeLog, userName]);
+
   return (
     <main className="container-fluid bg-success mt-5 pt-5 pb-3">
       <h3>My Adventure Log (Database Placeholder)</h3>
 
-      <div className="container examplepost mb-3 mt-2">
-          <span>Example Post</span>
-          <li>Hike Name: Y Mountian</li>
-          <li>Difficulty: Intermediate</li>
-          <li>Distance: 2 miles</li>
-          <li>Date: 8/26/2024</li>
-          <li>Start Time: 9:00am</li>
-          <li>End Time: 11:00am</li>
-          <li>Rating: 4 Stars</li>
-          <li>Jounral: Good hike, felt very steep, but loved the views of BYU campus</li>
-      </div>
+      {/* Display all the hikes in the log */}
+      {hikeLog.length > 0 && (
+        <div className="container">
+          <h4>Adventure Log:</h4>
+          {hikeLog.map((hike, index) => (
+            <div key={index} className="container examplepost mb-3 mt-2">
+              <span>{hike.hikeName}</span>
+              <ul>
+                <li>Difficulty: {hike.difficulty}</li>
+                <li>Distance: {hike.distance} miles</li>
+                <li>Date: {hike.date}</li>
+                <li>Start Time: {hike.startTime}</li>
+                <li>End Time: {hike.endTime}</li>
+                <li>Rating: {hike.rating}</li>
+                <li>Journal: {hike.journal}</li>
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
 
-
-      <form className="container hikerlogform" action="/myprofile" method="get" enctype="multipart/form-data">
+      {/* Form for adding a new hike */}
+      <form className="container hikerlogform" onSubmit={handleSubmit}>
         <h3>Add To Your Adventure Log:</h3>
-            <label for="name-of-hike">Name Of Hike: </label>
-            <input type="text" className="form-control" id="name-of-hike" name="varText" placeholder="Hike Name" />
-            <fieldset>
-              <legend>Difficulty</legend>
-              <div className="form-check">
-                <label for="easy" class="form-check-label">Easy</label>
-                <input type="radio" id="easy" className="form-check-input" name="varDifficulty" value="Easy" />
-              </div>
-              <div className="form-check">
-                <label for="intermediate" className="form-check-label">Intermediate</label>
-                <input type="radio" id="intermediate" className="form-check-input" name="varDifficulty" value="Intermediate" />
-              </div>
-              <div className="form-check">
-                <label for="advanced" className="form-check-label">Advanced</label>
-                <input type="radio" id="advanced" className="form-check-input" name="varDifficulty" value="Advanced" />
-              </div>
-              <div className="form-check">
-                <label for="expert" className="form-check-label">Expert</label>
-                <input type="radio" id="expert" className="form-check-input" name="varDifficulty" value="Expert" />
-              </div>
-            </fieldset>
-            <label for="Distance">Distance: </label>
-            <input type="number" className="form-control" name="distance" id="distance" min="0" step="0.5" placeholder="Miles" />
-            <label for="datetime">Date of Hike: </label>
-            <input type="datetime-local" className="form-control" name="varDatetime" id="datetime" />
-            <label for="start-time">Start Time: </label>
-            <input type="time" className="form-control" name="start-time" id="start-time" />
-            <label for="end-time">End Time: </label>
-            <input type="time" className="form-control" name="end-time" id="end-time" />
-            <fieldset>
-              <legend>Rating</legend>
-              <div className="form-check">
-                <label for="rating1" className="form-check-label">1 Star</label>
-                <input type="radio" id="rating1" className="form-check-input" name="varRating" value="rating1" />
-              </div>
-              <div className="form-check">
-                <label for="rating2" className="form-check-label">2 Stars</label>
-                <input type="radio" id="rating2" className="form-check-input" name="varRating" value="rating2" />
-              </div>
-              <div className="form-check">
-                <label for="rating3" className="form-check-label">3 Stars</label>
-                <input type="radio" id="rating3" className="form-check-input" name="varRating" value="rating3" />
-              </div>
-              <div className="form-check">
-                <label for="rating4" className="form-check-label">4 Stars</label>
-                <input type="radio" id="rating4" className="form-check-input" name="varRating" value="rating4" />
-              </div>
-              <div className="form-check">
-                <label for="rating5" className="form-check-label">5 Stars</label>
-                <input type="radio" id="rating5" className="form-check-input" name="varRating" value="rating5" />
-              </div>
-            </fieldset>
-            <label for="journal-entry">Journal Entry: </label>
-            <textarea id="journal-entry" className="form-control" name="journal-entry"></textarea>
-            <button type="submit" className="btn bg-dark-green mt-2 mb-2">Submit</button>
+
+        {/* Hike Name */}
+        <label htmlFor="name-of-hike">Name Of Hike: </label>
+        <input
+          type="text"
+          className="form-control"
+          id="name-of-hike"
+          value={hikeName}
+          onChange={(e) => setHikeName(e.target.value)}
+          placeholder="Hike Name"
+        />
+
+        {/* Difficulty */}
+        <fieldset>
+          <legend>Difficulty</legend>
+          {['Easy', 'Intermediate', 'Advanced', 'Expert'].map((level) => (
+            <div className="form-check" key={level}>
+              <input
+                type="radio"
+                id={level}
+                className="form-check-input"
+                name="difficulty"
+                value={level}
+                checked={difficulty === level}
+                onChange={(e) => setDifficulty(e.target.value)}
+              />
+              <label htmlFor={level} className="form-check-label">
+                {level}
+              </label>
+            </div>
+          ))}
+        </fieldset>
+
+        {/* Distance */}
+        <label htmlFor="distance">Distance: </label>
+        <input
+          type="number"
+          className="form-control"
+          id="distance"
+          value={distance}
+          onChange={(e) => setDistance(e.target.value)}
+          placeholder="Miles"
+        />
+
+        {/* Date */}
+        <label htmlFor="datetime">Date of Hike: </label>
+        <input
+          type="datetime-local"
+          className="form-control"
+          id="datetime"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+
+        {/* Start Time */}
+        <label htmlFor="start-time">Start Time: </label>
+        <input
+          type="time"
+          className="form-control"
+          id="start-time"
+          value={startTime}
+          onChange={(e) => setStartTime(e.target.value)}
+        />
+
+        {/* End Time */}
+        <label htmlFor="end-time">End Time: </label>
+        <input
+          type="time"
+          className="form-control"
+          id="end-time"
+          value={endTime}
+          onChange={(e) => setEndTime(e.target.value)}
+        />
+
+        {/* Rating */}
+        <fieldset>
+          <legend>Rating</legend>
+          {['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'].map((rate, idx) => (
+            <div className="form-check" key={idx}>
+              <input
+                type="radio"
+                id={`rating${idx + 1}`}
+                className="form-check-input"
+                name="rating"
+                value={rate}
+                checked={rating === rate}
+                onChange={(e) => setRating(e.target.value)}
+              />
+              <label htmlFor={`rating${idx + 1}`} className="form-check-label">
+                {rate}
+              </label>
+            </div>
+          ))}
+        </fieldset>
+
+        {/* Journal Entry */}
+        <label htmlFor="journal-entry">Journal Entry: </label>
+        <textarea
+          id="journal-entry"
+          className="form-control"
+          value={journal}
+          onChange={(e) => setJournal(e.target.value)}
+        ></textarea>
+
+        {/* Submit Button */}
+        <button type="submit" className="btn bg-dark-green mt-2 mb-2">
+          Submit
+        </button>
       </form>
     </main>
   );

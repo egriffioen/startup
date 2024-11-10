@@ -6,8 +6,14 @@ import { Login } from './login/login';
 import { MyProfile } from './myprofile/myprofile';
 import { Chat } from './chat/chat';
 import { About } from './about/about';
+import { AuthState } from './login/authState';
+import {Button} from 'react-bootstrap';
 
 export default function App() {
+  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
+
   return (
   <BrowserRouter>
   <div  className="body bg-dark-green text-light varela-round-regular">
@@ -23,12 +29,16 @@ export default function App() {
               <li className="nav-item">
                 <NavLink className="nav-link active text-white" to=''>Login</NavLink>
              </li>
+             {authState === AuthState.Authenticated && (
               <li className="nav-item">
                 <NavLink  className="nav-link text-white" to='myprofile'>My Profile</NavLink>
               </li>
+             )}
+             {authState === AuthState.Authenticated && (
               <li className="nav-item">
                 <NavLink  className="nav-link text-white" to='chat'>Chat</NavLink>
               </li>
+             )}
               <li className="nav-item">
                 <NavLink  className="nav-link text-white" to='about'>About</NavLink>
               </li>
@@ -39,7 +49,18 @@ export default function App() {
     </header>
 
     <Routes>
-        <Route path='/' element={<Login />} exact />
+        <Route path='/' element={
+          <Login
+          userName={userName}
+          authState={authState}
+          onAuthChange={(userName, authState) => {
+            setAuthState(authState);
+            setUserName(userName);
+          }}
+          />
+          }
+          exact
+        />
         <Route path='/myprofile' element={<MyProfile />} />
         <Route path='/chat' element={<Chat />} />
         <Route path='/about' element={<About />} />

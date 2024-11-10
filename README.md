@@ -58,3 +58,15 @@ For this deliverable I used CSS and Bootstrap to style the application.
 - **Application elements** - Made them look cleaner with better spacing and style
 - **Application text content** - Added a font, and styled text with borders or containers
 - **Application images** - Rounded the images and made them fluid to different screen sizes
+
+
+## REACT deliverable
+For this deliverable I ported my project into React and used javascript to create an authenticated login.
+
+- **Bundled and transpiled** - Ported all the html and css to react!
+- **Components** - Login, myprofile, chat, and about are all components with mocks for login.
+  - **login** - Login uses some react so that you have to add a username and password to login. There is also a seperate authenticated and unauthenticated page.
+  - **database** - Mock for the profile data and mock hiker scores.
+  - **WebSocket** - Mock chat is used.
+- **Router** - Routing between login, myprofile, chat and about pages.
+- **Hooks** - Uses hooks with the login authentication
