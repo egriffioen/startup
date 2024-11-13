@@ -59,6 +59,7 @@ apiRouter.get('/hikerStatus', (_req, res) => {
   
 // UpdateHikerStatus
 apiRouter.post('/status', (req, res) => {
+    console.log('Received hiker status update:', req.body);
     hikerStatus = updateHikerStatus(req.body, hikerStatus);
     res.send(hikerStatus);
   });

@@ -3,45 +3,24 @@ import './chat.css';
 
 export function Chat() {
   const [allHikerStatus, setAllHikerStatus] = useState([]);
-  
-  React.useEffect(() => {
+
+  useEffect(() => {
     fetch('/api/hikerStatus')
       .then((response) => response.json())
-      .then((allHikerStatus) => {
+      .then((data) => {
         console.log("Fetched hiker status:", data);
-        setAllHikerStatus(allHikerStatus);
+        setAllHikerStatus(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching hiker status:", error);
       });
   }, []);
 
-
-  // Get all users' hiker status from localStorage
-  //useEffect(() => {
-    //const allHikerStatusData = [];
-    // Loop through all keys in localStorage
-    //for (let i = 0; i < localStorage.length; i++) {
-      //const key = localStorage.key(i);
-      // If the key starts with 'hikerStatus_', it means it's a user's hiker status
-      //if (key.startsWith('hikerStatus_')) {
-        //const userName = key.replace('hikerStatus_', ''); // Remove 'hikerStatus_' to get the username
-        //const hikerStatus = localStorage.getItem(key);  // Get hiker status for that user
-
-        //if (hikerStatus) {
-          //allHikerStatusData.push({
-            //userName: userName,
-            //hikerStatus: hikerStatus,
-          //});
-        //}
-      //}
-    //}
-    
-    // Set the state with the fetched data
-    //setAllHikerStatus(allHikerStatusData);
-  //}, []);
-
+  // Generate rows for the hiker status table
   const hikerStatusRows = allHikerStatus.length > 0 ? (
     allHikerStatus.map((hiker, index) => (
       <tr key={index}>
-        <td>{hiker.userName.split('@')[0]}</td> {/* Get username without '@' */}
+        <td>{hiker.userName.includes('@') ? hiker.userName.split('@')[0] : hiker.userName}</td> {/* Handle @ symbol */}
         <td>{hiker.hikerStatus} Hikes Logged</td>
       </tr>
     ))
@@ -55,6 +34,7 @@ export function Chat() {
     <main className="container-fluid bg-success text-center mt-5 pt-5 pb-3">
       <h2>CHAT GOES HERE (WebSocket Placeholder)</h2>
       <div className="container-fluid pt-4 row d-flex justify-content-center align-items-start">
+        {/* Example chats */}
         <div className="container row col-md-5 chatborder d-flex justify-content-center align-items-center pb-4">
           <span className="chatheader">Chatting with Peter</span>
           <p className="container messageborder">

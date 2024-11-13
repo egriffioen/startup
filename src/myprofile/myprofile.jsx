@@ -17,6 +17,7 @@ export function MyProfile() {
     const storedLog = localStorage.getItem(`hikeLog_${userName}`);
     return storedLog ? JSON.parse(storedLog) : [];
   });
+  const [allHikerStatus, setAllHikerStatus] = useState([]);
 
   // Function to calculate hiker status as the length of the hike log
   const calculateHikerStatus = (log) => log.length;
@@ -24,6 +25,11 @@ export function MyProfile() {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!hikeName || !difficulty || !distance) {
+      alert('Please fill in all the required fields');
+      return;
+    }
 
     // Create a new hike object
     const newHike = { hikeName, difficulty, distance, date, startTime, endTime, rating, journal };
@@ -36,21 +42,26 @@ export function MyProfile() {
     // Calculate new hiker status and store it in localStorage
     const newHikerStatus = calculateHikerStatus(updatedLog);
     localStorage.setItem(`hikerStatus_${userName}`, newHikerStatus);
+
     async function saveStatus(userName, newHikerStatus) {
-      const newStatus = { name: userName, hikerStatus: newHikerStatus};
-  
+      const newStatus = { name: userName, hikerStatus: newHikerStatus };
+
       await fetch('/api/status', {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newStatus),
       })
       .then((response) => response.json())
       .then((data) => {
         console.log('Hiker status updated:', data);
-        setAllHikerStatus(data); // Update the hiker status in the frontend
-  })
+        setAllHikerStatus(data);  // Update the hiker status in the frontend
+      })
+      .catch((error) => {
+        console.error('Error updating hiker status:', error);
+      });
     }
     saveStatus(userName, newHikerStatus);
+
     // Clear the form fields
     setHikeName('');
     setDifficulty('');
