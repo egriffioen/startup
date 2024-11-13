@@ -47,6 +47,19 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
+// GetHikerLevels
+apiRouter.get('/hikerlevels', (_req, res) => {
+    res.send(hikerlevels);
+  });
+  
+  // SubmitHikerLevel
+  apiRouter.post('/level', (req, res) => {
+    hikerlevels = updateHikerLevels(req.body, hikerlevels);
+    res.send(hikerlevels);
+  });
+  
+
+
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
