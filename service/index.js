@@ -2,12 +2,17 @@ const express = require('express');
 const uuid = require('uuid');
 const app = express();
 
+app.use(express.json());
+
+var apiRouter = express.Router();
+app.use(`/api`, apiRouter);
+
 let users = {};
-let hikerlevels = [];
+let hikerStatus = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-app.use(express.json());
+
 
 apiRouter.post('/auth/create', async (req, res) => {
     const user = users[req.body.email];
@@ -47,19 +52,29 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-// GetHikerLevels
-apiRouter.get('/hikerlevels', (_req, res) => {
-    res.send(hikerlevels);
+// GetHikerStatus
+apiRouter.get('/hikerStatus', (_req, res) => {
+    res.send(hikerStatus);
   });
   
-  // SubmitHikerLevel
-  apiRouter.post('/level', (req, res) => {
-    hikerlevels = updateHikerLevels(req.body, hikerlevels);
-    res.send(hikerlevels);
+// UpdateHikerStatus
+apiRouter.post('/status', (req, res) => {
+    hikerStatus = updateHikerStatus(req.body, hikerStatus);
+    res.send(hikerStatus);
   });
-  
+
+  function updateHikerStatus(newStatus, hikerStatus) {
+    // Check if the user already exists in the list
+    const existingStatusIndex = hikerStatus.findIndex(status => status.name === newStatus.name);
+    if (existingStatusIndex !== -1) {
+      // Update existing hiker status
+      hikerStatus[existingStatusIndex] = newStatus;
+    } else {
+      // Add new hiker status
+      hikerStatus.push(newStatus);
+    }
+    return hikerStatus;
+  }
 
 
-var apiRouter = express.Router();
-app.use(`/api`, apiRouter);
 

@@ -36,7 +36,16 @@ export function MyProfile() {
     // Calculate new hiker status and store it in localStorage
     const newHikerStatus = calculateHikerStatus(updatedLog);
     localStorage.setItem(`hikerStatus_${userName}`, newHikerStatus);
-
+    async function saveStatus(newHikerStatus) {
+      const newStatus = { name: userName, hikerStatus: newHikerStatus};
+  
+      await fetch('/api/status', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(newStatus),
+      });
+    }
+    saveStatus(newHikerStatus);
     // Clear the form fields
     setHikeName('');
     setDifficulty('');

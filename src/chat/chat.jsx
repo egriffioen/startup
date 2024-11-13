@@ -4,30 +4,38 @@ import './chat.css';
 export function Chat() {
   const [allHikerStatus, setAllHikerStatus] = useState([]);
   
-  // Get all users' hiker status from localStorage
-  useEffect(() => {
-    const allHikerStatusData = [];
-    
-    // Loop through all keys in localStorage
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      // If the key starts with 'hikerStatus_', it means it's a user's hiker status
-      if (key.startsWith('hikerStatus_')) {
-        const userName = key.replace('hikerStatus_', ''); // Remove 'hikerStatus_' to get the username
-        const hikerStatus = localStorage.getItem(key);  // Get hiker status for that user
+  React.useEffect(() => {
+    fetch('/api/hikerStatus')
+      .then((response) => response.json())
+      .then((allHikerStatus) => {
+        setAllHikerStatus(allHikerStatus);
+      });
+  }, []);
 
-        if (hikerStatus) {
-          allHikerStatusData.push({
-            userName: userName,
-            hikerStatus: hikerStatus,
-          });
-        }
-      }
-    }
+
+  // Get all users' hiker status from localStorage
+  //useEffect(() => {
+    //const allHikerStatusData = [];
+    // Loop through all keys in localStorage
+    //for (let i = 0; i < localStorage.length; i++) {
+      //const key = localStorage.key(i);
+      // If the key starts with 'hikerStatus_', it means it's a user's hiker status
+      //if (key.startsWith('hikerStatus_')) {
+        //const userName = key.replace('hikerStatus_', ''); // Remove 'hikerStatus_' to get the username
+        //const hikerStatus = localStorage.getItem(key);  // Get hiker status for that user
+
+        //if (hikerStatus) {
+          //allHikerStatusData.push({
+            //userName: userName,
+            //hikerStatus: hikerStatus,
+          //});
+        //}
+      //}
+    //}
     
     // Set the state with the fetched data
-    setAllHikerStatus(allHikerStatusData);
-  }, []);
+    //setAllHikerStatus(allHikerStatusData);
+  //}, []);
 
   const hikerStatusRows = allHikerStatus.length > 0 ? (
     allHikerStatus.map((hiker, index) => (
