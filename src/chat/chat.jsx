@@ -8,6 +8,7 @@ export function Chat() {
     fetch('/api/hikerStatus')
       .then((response) => response.json())
       .then((allHikerStatus) => {
+        console.log("Fetched hiker status:", data);
         setAllHikerStatus(allHikerStatus);
       });
   }, []);
