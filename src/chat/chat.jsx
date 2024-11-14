@@ -16,19 +16,24 @@ export function Chat() {
       });
   }, []);
 
-  // Generate rows for the hiker status table
-  const hikerStatusRows = allHikerStatus.length > 0 ? (
-    allHikerStatus.map((hiker, index) => (
+
+  const hikerStatusRows = Array.isArray(allHikerStatus) && allHikerStatus.length > 0
+  ? allHikerStatus.map((hiker, index) => (
       <tr key={index}>
-        <td>{hiker.userName.includes('@') ? hiker.userName.split('@')[0] : hiker.userName}</td> {/* Handle @ symbol */}
+        <td>
+          {hiker.name && hiker.name.includes('@') 
+            ? hiker.name.split('@')[0] 
+            : hiker.name || 'Guest'}
+        </td>
         <td>{hiker.hikerStatus} Hikes Logged</td>
       </tr>
     ))
-  ) : (
-    <tr key="0">
-      <td colSpan="2">Be the first explorer!</td>
-    </tr>
-  );
+  : (
+      <tr key="0">
+        <td colSpan="2">Be the first explorer!</td>
+      </tr>
+    );
+
 
   return (
     <main className="container-fluid bg-success text-center mt-5 pt-5 pb-3">
