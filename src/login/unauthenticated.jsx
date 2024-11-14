@@ -7,6 +7,55 @@ export function Unauthenticated(props) {
   const [userName, setUserName] = React.useState(props.userName);
   const [password, setPassword] = React.useState('');
   const [displayError, setDisplayError] = React.useState(null);
+  const [weather, setWeather] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetchWeatherData = async () => {
+      try {
+        const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=40.235119&longitude=-111.662193&current=temperature_2m%2Crelative_humidity_2m%2Crain%2Cweather_code');
+        if (!response.ok) {
+          throw new Error('Failed to fetch weather data');
+        }
+    
+        const data = await response.json();
+        console.log('Weather API Response:', data); // Log the full API response
+    
+        // Check if current data exists before trying to access its properties
+        if (data.current) {
+          const currentWeather = data.current;
+          console.log('Current weather from the api:', currentWeather);
+          
+          setWeather({
+            temperature: currentWeather.temperature_2m,
+            humidity: currentWeather.relative_humidity_2m,
+            rain: currentWeather.rain,
+          });
+          console.log('weather object to be accessed later:',weather);
+        } else {
+          console.error('Error: Current weather data not found in the response');
+          setError('Error: Current weather data not found.');
+        }
+    
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+        setError(error.message); // Handle errors here
+        setLoading(false);
+      }
+    };
+    fetchWeatherData();
+  }, []); // Empty array ensures this only runs once on component mount
+
+  if (loading) {
+    return <div>Loading weather data...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
 
   async function loginUser() {
     loginOrCreate(`/api/auth/login`);
@@ -33,6 +82,9 @@ export function Unauthenticated(props) {
     }
   }
 
+    
+
+
   return (
     <><h1>Hello World!</h1>
     <div id="picture" className="picture-box"><img className="img-fluid rounded" width="500px" src="https://images.pexels.com/photos/9754/mountains-clouds-forest-fog.jpg?auto=compress&cs=tinysrgb&w=800" alt="Forest Image" /></div>
@@ -57,13 +109,18 @@ export function Unauthenticated(props) {
       </div>
       <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
       <div>
-      API of Current Weather will go here
-    </div>
-    <div>
-        <li>Temperature: 80 degrees</li>
-        <li>Weather: Partly Cloudy</li>
-        <li>Heat Index: 90 degrees</li>
-    </div>
+        <h2>Current Weather</h2>
+        {console.log(weather)}
+        {weather ? (
+          <div>
+            <li>Temperature: {weather.temperature}°C</li>
+            <li>Humidity: {weather.humidity}%</li>
+            <li>Rainfall: {weather.rain} mm</li>
+          </div>
+        ) : (
+          <div>Weather data not available</div>
+        )}
+      </div>
     </>
   );
 }
