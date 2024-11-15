@@ -70,3 +70,13 @@ For this deliverable I ported my project into React and used javascript so that 
   - **WebSocket** - Mock chat is used. Hiker Level table will show all users and the number of hikes they have logged on the local data
 - **Router** - Routing between login, myprofile, chat and about pages.
 - **Hooks** - Uses hooks with the login authentication and for the myprofile adventure log and hiker level table
+
+## Service deliverable
+
+For this deliverable I added a backend that uses an api for login and the hikerStatus table
+
+- [x] **Node.js/Express HTTP service** - done!
+- [x] **Static middleware for frontend** - done!
+- [ ] **Calls to third party endpoints** - The current weather displayed on the login page is a call to a 3rd party api
+- [x] **Backend service endpoints** - Placeholders for login that stores the current user on the server. Endpoints for hikerStatus table.
+- [x] **Frontend calls service endpoints** - Using the fetch command, you can see the hikerStatus table displayed

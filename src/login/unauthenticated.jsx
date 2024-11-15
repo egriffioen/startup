@@ -8,7 +8,6 @@ export function Unauthenticated(props) {
   const [password, setPassword] = React.useState('');
   const [displayError, setDisplayError] = React.useState(null);
   const [weather, setWeather] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
@@ -38,19 +37,14 @@ export function Unauthenticated(props) {
           setError('Error: Current weather data not found.');
         }
     
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching weather data:', error);
         setError(error.message); // Handle errors here
-        setLoading(false);
       }
     };
     fetchWeatherData();
   }, []); // Empty array ensures this only runs once on component mount
 
-  if (loading) {
-    return <div>Loading weather data...</div>;
-  }
 
   if (error) {
     return <div>Error: {error}</div>;
