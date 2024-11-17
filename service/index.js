@@ -16,6 +16,7 @@ const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 
 
+
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
   const user = users[req.body.email];
@@ -78,6 +79,10 @@ apiRouter.post('/status', (req, res) => {
     return hikerStatus;
   }
 
+  app.use((_req, res) => {
+    res.sendFile('index.html', { root: 'public' });
+  });
+  
   app.listen(port, () => {
     console.log(`Listening on port ${port}`);
   });
