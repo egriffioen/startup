@@ -37,3 +37,10 @@ async function createUser(email, password) {
   await userCollection.insertOne(user);
   return user;
 }
+
+
+module.exports = {
+  getUser,
+  getUserByToken,
+  createUser,
+};
