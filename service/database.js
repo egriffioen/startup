@@ -38,11 +38,25 @@ async function createUser(email, password) {
   return user;
 }
 
+async function getHikerStatus() {
+  return await hikerStatusCollection.find().toArray(); 
+} 
 
+async function updateHikerStatus(newStatus) { 
+  const { name } = newStatus; 
+  const result = await hikerStatusCollection.updateOne( 
+    { name }, 
+    { $set: newStatus }, 
+    { upsert: true } 
+  ); 
+  return result; 
+}
 
 
 module.exports = {
   getUser,
   getUserByToken,
   createUser,
+  getHikerStatus,
+  updateHikerStatus,
 };
