@@ -86,37 +86,12 @@ apiRouter.post('/status', async (req, res) => {
 });
 
 
-
-
-
-
-
-
-// // GetHikerStatus
-// apiRouter.get('/hikerStatus', (_req, res) => {
-//     res.send(hikerStatus);
-//   });
-  
-// // UpdateHikerStatus
-// apiRouter.post('/status', (req, res) => {
-//     console.log('Received hiker status update:', req.body);
-//     hikerStatus = updateHikerStatus(req.body, hikerStatus);
-//     res.send(hikerStatus);
-//   });
-
-//   function updateHikerStatus(newStatus, hikerStatus) {
-//     // Check if the user already exists in the list
-//     const existingStatusIndex = hikerStatus.findIndex(status => status.name === newStatus.name);
-//     if (existingStatusIndex !== -1) {
-//       // Update existing hiker status
-//       hikerStatus[existingStatusIndex] = newStatus;
-//     } else {
-//       // Add new hiker status
-//       hikerStatus.push(newStatus);
-//     }
-//     return hikerStatus;
-//   }
-
+apiRouter.post('/hikeLog', async(req, res) => {
+  const {userName, hikeLog} = req.body;
+  console.log('Received hiker log:', req.body);
+  await DB.saveHikerLog(userName, hikeLog);
+  res.status(200).send({msg: 'Hiker log saved successfully'});
+});
 
   app.use(function (err, req, res, next) {
     res.status(500).send({type: err.name, message: err.message});

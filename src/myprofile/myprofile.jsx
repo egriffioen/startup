@@ -60,7 +60,25 @@ export function MyProfile() {
         console.error('Error updating hiker status:', error);
       });
     }
+
+    async function saveHikeLog(userName, updatedLog) {
+      const logData = {userName, hikeLog: updatedLog};
+      await fetch('/api/hikeLog', {
+        method: 'Post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(logData),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Hiker log saved:', data);
+      })
+      .catch ((error) => {
+        console.error('Error saving hiker log:', error);
+      });
+    }
+
     saveStatus(userName, newHikerStatus);
+    saveHikeLog(userName, updatedLog);
 
     // Clear the form fields
     setHikeName('');

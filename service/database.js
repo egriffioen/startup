@@ -70,4 +70,6 @@ module.exports = {
   createUser,
   getHikerStatus,
   updateHikerStatus,
+  getHikerLogs,
+  saveHikerLog,
 };
