@@ -13,14 +13,25 @@ export function MyProfile() {
   const [endTime, setEndTime] = useState('');
   const [rating, setRating] = useState('');
   const [journal, setJournal] = useState('');
-  const [hikeLog, setHikeLog] = useState(() => {
-    const storedLog = localStorage.getItem(`hikeLog_${userName}`);
-    return storedLog ? JSON.parse(storedLog) : [];
-  });
+  const [hikeLog, setHikeLog] = useState([]);
   const [allHikerStatus, setAllHikerStatus] = useState([]);
 
   // Function to calculate hiker status as the length of the hike log
   const calculateHikerStatus = (log) => log.length;
+
+  useEffect(() => { 
+    // Fetch the hiker logs from the database when the component mounts 
+    async function fetchHikeLogs() { 
+      try { 
+        const response = await fetch(`/api/hikeLog?userName=${userName}`); 
+        const data = await response.json(); 
+        setHikeLog(data.hikeLog || []); 
+      } catch (error) { 
+        console.error('Error fetching hiker logs:', error); 
+      } 
+    } 
+    fetchHikeLogs(); 
+  }, [userName]);
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -91,10 +102,6 @@ export function MyProfile() {
     setJournal('');
   };
 
-  useEffect(() => {
-    // Keep the hike log in sync with localStorage
-    localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(hikeLog));
-  }, [hikeLog, userName]);
 
   return (
     <main className="container-fluid bg-success mt-5 pt-5 pb-3">

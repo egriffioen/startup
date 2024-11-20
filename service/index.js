@@ -93,6 +93,16 @@ secureApiRouter.post('/hikeLog', async(req, res) => {
   res.status(200).send({msg: 'Hiker log saved successfully'});
 });
 
+secureApiRouter.get('/hikeLog', async(req, res) => {
+  const {userName} = req.query;
+  try {
+    const hikeLog = await DB.getHikerLogs(userName);
+    res.send({hikeLog});
+  } catch (error) {
+    res.status(500).send({msg: 'Error fetching hiker logs', error});
+  }
+});
+
   app.use(function (err, req, res, next) {
     res.status(500).send({type: err.name, message: err.message});
   });
