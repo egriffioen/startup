@@ -71,32 +71,51 @@ secureApiRouter.use(async (req, res, next) => {
   }
 });
 
-
-
-// GetHikerStatus
-apiRouter.get('/hikerStatus', (_req, res) => {
-    res.send(hikerStatus);
-  });
+//GetHikerStatus from the database
+apiRouter.get('/hikerStatus', async (req, res) => { 
+  const hikerStatus = await DB.getHikerStatus();
+  res.send(hikerStatus); 
+}); 
   
-// UpdateHikerStatus
-apiRouter.post('/status', (req, res) => {
-    console.log('Received hiker status update:', req.body);
-    hikerStatus = updateHikerStatus(req.body, hikerStatus);
-    res.send(hikerStatus);
-  });
+// UpdateHikerStatus in the database 
+apiRouter.post('/status', async (req, res) => { 
+  console.log('Received hiker status update:', req.body);
+  await DB.updateHikerStatus(req.body);
+  const hikerStatus = await DB.getHikerStatus();
+  res.send(hikerStatus); 
+});
 
-  function updateHikerStatus(newStatus, hikerStatus) {
-    // Check if the user already exists in the list
-    const existingStatusIndex = hikerStatus.findIndex(status => status.name === newStatus.name);
-    if (existingStatusIndex !== -1) {
-      // Update existing hiker status
-      hikerStatus[existingStatusIndex] = newStatus;
-    } else {
-      // Add new hiker status
-      hikerStatus.push(newStatus);
-    }
-    return hikerStatus;
-  }
+
+
+
+
+
+
+
+// // GetHikerStatus
+// apiRouter.get('/hikerStatus', (_req, res) => {
+//     res.send(hikerStatus);
+//   });
+  
+// // UpdateHikerStatus
+// apiRouter.post('/status', (req, res) => {
+//     console.log('Received hiker status update:', req.body);
+//     hikerStatus = updateHikerStatus(req.body, hikerStatus);
+//     res.send(hikerStatus);
+//   });
+
+//   function updateHikerStatus(newStatus, hikerStatus) {
+//     // Check if the user already exists in the list
+//     const existingStatusIndex = hikerStatus.findIndex(status => status.name === newStatus.name);
+//     if (existingStatusIndex !== -1) {
+//       // Update existing hiker status
+//       hikerStatus[existingStatusIndex] = newStatus;
+//     } else {
+//       // Add new hiker status
+//       hikerStatus.push(newStatus);
+//     }
+//     return hikerStatus;
+//   }
 
 
   app.use(function (err, req, res, next) {
