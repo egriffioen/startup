@@ -52,6 +52,17 @@ async function updateHikerStatus(newStatus) {
   return result; 
 }
 
+async function getHikerLogs(userName) {
+  return await hikerLogCollection.find({userName}).toArray()
+}
+
+async function saveHikerLog(userName, hikeLog) {
+  await hikerLogCollection.updateOne(
+    {userName},
+    {$set: {hikeLog}},
+    {upsert: true}
+  );
+}
 
 module.exports = {
   getUser,
