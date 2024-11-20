@@ -1,10 +1,19 @@
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
+const DB = require('./database.js');
+
+const authCookieName = 'token';
 
 app.use(express.json());
 
+app.use(cookieParser());
+
 app.use(express.static('public'));
+
+app.set('trust proxy', true);
 
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
@@ -79,11 +88,24 @@ apiRouter.post('/status', (req, res) => {
     return hikerStatus;
   }
 
+
+  app.use(function (err, req, res, next) {
+    res.status(500).send({type: err.name, message: err.message});
+  });
+
   app.use((_req, res) => {
     res.sendFile('index.html', { root: 'public' });
   });
-  
-  app.listen(port, () => {
+
+  function setAuthoCookie(res, authToken) {
+    res.cookie(authCookieName, authToken, {
+      secure: true,
+      httpOnly: true,
+      sameSite: 'strict',
+    });
+  }
+
+  const httpService = app.listen(port, () => {
     console.log(`Listening on port ${port}`);
   });
 
