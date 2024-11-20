@@ -72,13 +72,13 @@ secureApiRouter.use(async (req, res, next) => {
 });
 
 //GetHikerStatus from the database
-apiRouter.get('/hikerStatus', async (req, res) => { 
+secureApiRouter.get('/hikerStatus', async (req, res) => { 
   const hikerStatus = await DB.getHikerStatus();
   res.send(hikerStatus); 
 }); 
   
 // UpdateHikerStatus in the database 
-apiRouter.post('/status', async (req, res) => { 
+secureApiRouter.post('/status', async (req, res) => { 
   console.log('Received hiker status update:', req.body);
   await DB.updateHikerStatus(req.body);
   const hikerStatus = await DB.getHikerStatus();
@@ -86,7 +86,7 @@ apiRouter.post('/status', async (req, res) => {
 });
 
 
-apiRouter.post('/hikeLog', async(req, res) => {
+secureApiRouter.post('/hikeLog', async(req, res) => {
   const {userName, hikeLog} = req.body;
   console.log('Received hiker log:', req.body);
   await DB.saveHikerLog(userName, hikeLog);

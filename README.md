@@ -75,8 +75,19 @@ For this deliverable I ported my project into React and used javascript so that 
 
 For this deliverable I added a backend that uses an api for login and the hikerStatus table
 
-- [x] **Node.js/Express HTTP service** - done!
-- [x] **Static middleware for frontend** - done!
-- [ ] **Calls to third party endpoints** - The current weather displayed on the login page is a call to a 3rd party api
-- [x] **Backend service endpoints** - Placeholders for login that stores the current user on the server. Endpoints for hikerStatus table.
-- [x] **Frontend calls service endpoints** - Using the fetch command, you can see the hikerStatus table displayed
+- **Node.js/Express HTTP service** - done!
+- **Static middleware for frontend** - done!
+- **Calls to third party endpoints** - The current weather displayed on the login page is a call to a 3rd party api
+- **Backend service endpoints** - Placeholders for login that stores the current user on the server. Endpoints for hikerStatus table.
+- **Frontend calls service endpoints** - Using the fetch command, you can see the hikerStatus table displayed
+
+## DB/Login deliverable
+
+For this deliverable I associate the hikerLog and hikerStatus with the logged in user
+
+- **MongoDB Atlas database created** - done!
+- **Stores data in MongoDB** - done!
+- **User registration** - Creates a new account in the database.
+- **existing user** - Existing users can log back in and see their existing hikerLogs and hikerStatus
+- **Use MongoDB to store credentials** - Stores both user and their logs and status.
+- **Restricts functionality** - You cannot log a hike or have a hikerstatus unless you are logged in
