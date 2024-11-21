@@ -42,7 +42,6 @@ export function MyProfile() {
 
   // Handle form submission
   const handleSubmit = async (e) => {
-  const handleSubmit = async (e) => {
     e.preventDefault();
 
 
