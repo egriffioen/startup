@@ -16,6 +16,21 @@ export function MyProfile() {
   const [hikeLog, setHikeLog] = useState([]);
   const [allHikerStatus, setAllHikerStatus] = useState([]);
 
+  useEffect(() => {
+    async function fetchHikeLog() {
+      try {
+        const response = await fetch(`/api/logs?userName=${userName}`);
+        const data = await response.json();
+        setHikeLog(data || []); // Update state with the fetched log
+      } catch (error) {
+        console.error('Error fetching hike log:', error);
+      }
+    }
+
+    fetchHikeLog(); // Call the function to fetch the hike log
+  }, [userName]); // Re-run the effect when userName changes
+
+
   // Function to calculate hiker status as the length of the hike log
   const calculateHikerStatus = (log) => log.length;
 
@@ -34,13 +49,13 @@ export function MyProfile() {
   }, [userName]);
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!hikeName || !difficulty || !distance) {
-      alert('Please fill in all the required fields');
-      return;
-    }
+    // if (!hikeName || !difficulty || !distance) {
+    //   alert('Please fill in all the required fields');
+    //   return;
+    // }
 
     // Create a new hike object
     const newHike = { hikeName, difficulty, distance, date, startTime, endTime, rating, journal };
@@ -48,11 +63,38 @@ export function MyProfile() {
     // Update the hike log and store it in localStorage
     const updatedLog = [...hikeLog, newHike];
     setHikeLog(updatedLog);
-    localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(updatedLog));
+    //localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(updatedLog));
+
+    try {
+      await saveHikeLog(userName, newHike);
+      const newHikerStatus = calculateHikerStatus(updatedLog);
+      await saveStatus(userName, newHikerStatus);
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+
+
 
     // Calculate new hiker status and store it in localStorage
     const newHikerStatus = calculateHikerStatus(updatedLog);
     localStorage.setItem(`hikerStatus_${userName}`, newHikerStatus);
+
+    
+    async function saveHikeLog(userName, newHike) {
+      const logData = {userName, hikeLog: newHike};
+      await fetch('/api/hikeLog', {
+        method: 'Post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(logData),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Hiker log saved:', data);
+      })
+      .catch ((error) => {
+        console.error('Error saving hiker log:', error);
+      });
+    }
 
     async function saveStatus(userName, newHikerStatus) {
       const newStatus = { name: userName, hikerStatus: newHikerStatus };
@@ -72,24 +114,8 @@ export function MyProfile() {
       });
     }
 
-    async function saveHikeLog(userName, updatedLog) {
-      const logData = {userName, hikeLog: updatedLog};
-      await fetch('/api/hikeLog', {
-        method: 'Post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(logData),
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Hiker log saved:', data);
-      })
-      .catch ((error) => {
-        console.error('Error saving hiker log:', error);
-      });
-    }
-
-    saveStatus(userName, newHikerStatus);
-    saveHikeLog(userName, updatedLog);
+    // saveStatus(userName, newHikerStatus);
+    // saveHikeLog(userName, updatedLog);
 
     // Clear the form fields
     setHikeName('');
