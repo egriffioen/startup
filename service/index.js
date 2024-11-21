@@ -102,9 +102,8 @@ secureApiRouter.post('/status', async (req, res) => {
   res.send(hikerStatus);
 });
 
-
 //GetHikerLog
-secureApiRouter.get('/logs', async (req, res) => {
+secureApiRouter.get('/logs', async (req, res) => { 
   const userName = req.query.userName;
   try {
     console.log('Received request for logs');
@@ -117,11 +116,8 @@ secureApiRouter.get('/logs', async (req, res) => {
   }
   // const userName = req.query.userName
   // const hikerLogs = await DB.getHikerLogs(userName);
-  // res.send(hikerLogs[0]);
-});
-
-
-
+  // res.send(hikerLogs[0]); 
+}); 
 
 
 

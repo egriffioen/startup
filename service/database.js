@@ -59,26 +59,22 @@ async function updateHikerStatus(newStatus) {
   return result;
 }
 
-
 // async function getHikerLogs(userName) {
 //   return await hikerLogCollection.find({userName}).toArray()
 // }
 
-
-// async function getHikerLogs(userName) {
-//   try {
-//     console.log(`Querying hiker logs for userName: ${userName}`);
-//     // Add logging
+// async function getHikerLogs(userName) { 
+//   try { 
+//     console.log(`Querying hiker logs for userName: ${userName}`); 
+//     // Add logging 
 //     const logs = await hikerLogCollection.find({ userName }, { projection: { _id: 0, hikeLog: 1 } }).toArray();
-//     console.log(`Found logs: ${JSON.stringify(logs)}`); // Add logging
-//     return logs;
-//   } catch (error) {
-//     console.error('Error querying hiker logs:', error); // Add error logging
-//     throw error;
-//   }
+//     console.log(`Found logs: ${JSON.stringify(logs)}`); // Add logging 
+//     return logs; 
+//   } catch (error) { 
+//     console.error('Error querying hiker logs:', error); // Add error logging 
+//     throw error; 
+//   } 
 // }
-
-
 
 
 // async function saveHikerLog(userName, newHike) {
@@ -91,13 +87,12 @@ async function updateHikerStatus(newStatus) {
 //   } else {
 //     await hikerLogCollection.insertOne({userName, hikerLog: [newHike]});
 //   }
- 
+  
 // }
-
 
 // Save new hike logs for a user
 async function saveHikerLog(userName, hikeLog) {
- 
+  
   // Find the user by username and update their hike log array
   const result = await hikerLogCollection.updateOne(
     { userName }, // Match the user by username
@@ -105,10 +100,8 @@ async function saveHikerLog(userName, hikeLog) {
     {upsert: true}
   );
 
-
   return result;
 }
-
 
 // Fetch hike log based on username (this is used in the /logs route)
 async function getHikerLogs(userName) {
@@ -118,10 +111,9 @@ async function getHikerLogs(userName) {
     //{ projection: { _id: 0, hikeLog: 1 } } // Only return `hikeLog`, exclude `_id`
     //{ hikeLog }
   );
- 
+  
   return user ? user.hikeLog : [];
 }
-
 
 module.exports = {
   getUser,
