@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './myprofile.css';
 
+
 export function MyProfile() {
   const userName = localStorage.getItem('userName');
-  
+ 
   // Initialize state with data from localStorage (if it exists), or an empty array if not
   const [hikeName, setHikeName] = useState('');
   const [difficulty, setDifficulty] = useState('');
@@ -16,46 +17,89 @@ export function MyProfile() {
   const [hikeLog, setHikeLog] = useState([]);
   const [allHikerStatus, setAllHikerStatus] = useState([]);
 
+
+  useEffect(() => {
+    async function fetchHikeLog() {
+      try {
+        const response = await fetch(`/api/logs?userName=${userName}`);
+        const data = await response.json();
+        setHikeLog(data || []); // Update state with the fetched log
+      } catch (error) {
+        console.error('Error fetching hike log:', error);
+      }
+    }
+
+
+    fetchHikeLog(); // Call the function to fetch the hike log
+  }, [userName]); // Re-run the effect when userName changes
+
+
+
+
   // Function to calculate hiker status as the length of the hike log
   const calculateHikerStatus = (log) => log.length;
 
-  useEffect(() => { 
-    // Fetch the hiker logs from the database when the component mounts 
-    async function fetchHikeLogs() { 
-      try { 
-        const response = await fetch(`/api/hikeLog?userName=${userName}`); 
-        const data = await response.json(); 
-        setHikeLog(data.hikeLog || []); 
-      } catch (error) { 
-        console.error('Error fetching hiker logs:', error); 
-      } 
-    } 
-    fetchHikeLogs(); 
-  }, [userName]);
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!hikeName || !difficulty || !distance) {
-      alert('Please fill in all the required fields');
-      return;
-    }
+
+    // if (!hikeName || !difficulty || !distance) {
+    //   alert('Please fill in all the required fields');
+    //   return;
+    // }
+
 
     // Create a new hike object
     const newHike = { hikeName, difficulty, distance, date, startTime, endTime, rating, journal };
 
+
     // Update the hike log and store it in localStorage
     const updatedLog = [...hikeLog, newHike];
     setHikeLog(updatedLog);
-    localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(updatedLog));
+    //localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(updatedLog));
+
+
+    try {
+      await saveHikeLog(userName, newHike);
+      const newHikerStatus = calculateHikerStatus(updatedLog);
+      await saveStatus(userName, newHikerStatus);
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+
+
+
+
+
 
     // Calculate new hiker status and store it in localStorage
     const newHikerStatus = calculateHikerStatus(updatedLog);
     localStorage.setItem(`hikerStatus_${userName}`, newHikerStatus);
 
+
+   
+    async function saveHikeLog(userName, newHike) {
+      const logData = {userName, hikeLog: newHike};
+      await fetch('/api/hikeLog', {
+        method: 'Post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(logData),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Hiker log saved:', data);
+      })
+      .catch ((error) => {
+        console.error('Error saving hiker log:', error);
+      });
+    }
+
+
     async function saveStatus(userName, newHikerStatus) {
       const newStatus = { name: userName, hikerStatus: newHikerStatus };
+
 
       await fetch('/api/status', {
         method: 'POST',
@@ -72,24 +116,10 @@ export function MyProfile() {
       });
     }
 
-    async function saveHikeLog(userName, updatedLog) {
-      const logData = {userName, hikeLog: updatedLog};
-      await fetch('/api/hikeLog', {
-        method: 'Post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(logData),
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Hiker log saved:', data);
-      })
-      .catch ((error) => {
-        console.error('Error saving hiker log:', error);
-      });
-    }
 
-    saveStatus(userName, newHikerStatus);
-    saveHikeLog(userName, updatedLog);
+    // saveStatus(userName, newHikerStatus);
+    // saveHikeLog(userName, updatedLog);
+
 
     // Clear the form fields
     setHikeName('');
@@ -103,9 +133,16 @@ export function MyProfile() {
   };
 
 
+  useEffect(() => {
+    // Keep the hike log in sync with localStorage
+    localStorage.setItem(`hikeLog_${userName}`, JSON.stringify(hikeLog));
+  }, [hikeLog, userName]);
+
+
   return (
     <main className="container-fluid bg-success mt-5 pt-5 pb-3">
       <h3>My Adventure Log (Database Placeholder)</h3>
+
 
       {/* Display all the hikes in the log */}
       {hikeLog.length > 0 && (
@@ -128,9 +165,11 @@ export function MyProfile() {
         </div>
       )}
 
+
       {/* Form for adding a new hike */}
       <form className="container hikerlogform" onSubmit={handleSubmit}>
         <h3>Add To Your Adventure Log:</h3>
+
 
         {/* Hike Name */}
         <label htmlFor="name-of-hike">Name Of Hike: </label>
@@ -142,6 +181,7 @@ export function MyProfile() {
           onChange={(e) => setHikeName(e.target.value)}
           placeholder="Hike Name"
         />
+
 
         {/* Difficulty */}
         <fieldset>
@@ -164,6 +204,7 @@ export function MyProfile() {
           ))}
         </fieldset>
 
+
         {/* Distance */}
         <label htmlFor="distance">Distance: </label>
         <input
@@ -175,6 +216,7 @@ export function MyProfile() {
           placeholder="Miles"
         />
 
+
         {/* Date */}
         <label htmlFor="datetime">Date of Hike: </label>
         <input
@@ -184,6 +226,7 @@ export function MyProfile() {
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
+
 
         {/* Start Time */}
         <label htmlFor="start-time">Start Time: </label>
@@ -195,6 +238,7 @@ export function MyProfile() {
           onChange={(e) => setStartTime(e.target.value)}
         />
 
+
         {/* End Time */}
         <label htmlFor="end-time">End Time: </label>
         <input
@@ -204,6 +248,7 @@ export function MyProfile() {
           value={endTime}
           onChange={(e) => setEndTime(e.target.value)}
         />
+
 
         {/* Rating */}
         <fieldset>
@@ -226,6 +271,7 @@ export function MyProfile() {
           ))}
         </fieldset>
 
+
         {/* Journal Entry */}
         <label htmlFor="journal-entry">Journal Entry: </label>
         <textarea
@@ -235,6 +281,7 @@ export function MyProfile() {
           onChange={(e) => setJournal(e.target.value)}
         ></textarea>
 
+
         {/* Submit Button */}
         <button type="submit" className="btn bg-dark-green mt-2 mb-2">
           Submit
@@ -243,3 +290,5 @@ export function MyProfile() {
     </main>
   );
 }
+
+
