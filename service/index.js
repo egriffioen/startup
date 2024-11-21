@@ -85,7 +85,26 @@ secureApiRouter.post('/status', async (req, res) => {
   res.send(hikerStatus); 
 });
 
+//GetHikerLog
+secureApiRouter.get('/logs', async (req, res) => { 
+  const userName = req.query.userName;
+  try {
+    console.log('Received request for logs');
+    const hikerLogs = await DB.getHikerLogs(userName);
+    console.log('Found logs:', hikerLogs);
+    res.send(hikerLogs);
+  } catch (error) {
+    console.error('Error fetching logs:', error);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+  // const userName = req.query.userName
+  // const hikerLogs = await DB.getHikerLogs(userName);
+  // res.send(hikerLogs[0]); 
+}); 
 
+
+
+//Save a New Log in the Database
 secureApiRouter.post('/hikeLog', async(req, res) => {
   const {userName, hikeLog} = req.body;
   console.log('Received hiker log:', req.body);
