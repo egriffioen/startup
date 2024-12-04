@@ -38,9 +38,9 @@ export function Chat() {
   return (
     <main className="container-fluid bg-success text-center mt-5 pt-5 pb-3">
       <h2>Live Chat</h2>
-      <div class="name">
+      <div className="name">
         <fieldset id="name-controls">
-          <legend>My Name</legend>
+          <legend>Hiker Name</legend>
           <input id="my-name" type="text" />
         </fieldset>
       </div>
