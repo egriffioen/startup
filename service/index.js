@@ -4,6 +4,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const DB = require('./database.js');
+const { peerProxy } = require('./peerProxy.js');
 
 
 const authCookieName = 'token';
@@ -149,8 +150,20 @@ secureApiRouter.post('/hikeLog', async(req, res) => {
   }
 
 
-  const httpService = app.listen(port, () => {
+const httpService = app.listen(port, () => {
     console.log(`Listening on port ${port}`);
   });
+
+  // setAuthCookie in the HTTP response
+function setAuthCookie(res, authToken) {
+  res.cookie(authCookieName, authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}
+
+peerProxy(httpService);
+
 
 
