@@ -91,3 +91,13 @@ For this deliverable I associate the hikerLog and hikerStatus with the logged in
 - **existing user** - Existing users can log back in and see their existing hikerLogs and hikerStatus
 - **Use MongoDB to store credentials** - Stores both user and their logs and status.
 - **Restricts functionality** - You cannot log a hike or have a hikerstatus unless you are logged in
+
+## WebSocket deliverable
+
+For this deliverable I used webSocket to implement a live chat feature
+
+- **Backend listens for WebSocket connection** - done!
+- **Frontend makes WebSocket connection** - done!
+- **Data sent over WebSocket connection** - done!
+- **WebSocket data displayed** - You can see the messages sent to the chat in real time!
+- **All features are functional** - done!
