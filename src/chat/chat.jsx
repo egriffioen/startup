@@ -28,27 +28,27 @@ export function Chat() {
     socketRef.current = socket;
 
     socket.onopen = () => {
+      console.log('WebSocket connected');
       appendMsg('system', 'websocket', 'connected');
     };
 
     socket.onmessage = (event) => {
+      console.log('Message received:', event.data);
       const chat = JSON.parse(event.data);
-      appendMsg('hiker', chat.name, chat.msg);
+      appendMsg('hiker', chat.name, chat.msg); // Display incoming messages
     };
 
     socket.onclose = () => {
+      console.log('WebSocket disconnected');
       appendMsg('system', 'websocket', 'disconnected');
     };
 
-    function appendMsg(cls, from, msg) {
-      if (chatTextRef.current) {
-        const chatEl = document.createElement('div');
-        chatEl.innerHTML = `<span class="${cls}">${from}</span>: ${msg}`;
-        chatTextRef.current.prepend(chatEl);
-      }
-    }
+    socket.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
 
     return () => {
+      console.log('WebSocket closing');
       socket.close();
     };
   }, []);
@@ -57,13 +57,18 @@ export function Chat() {
     const msg = msgInputRef.current?.value;
     const name = nameInputRef.current?.value || 'Guest';
     if (msg && socketRef.current?.readyState === WebSocket.OPEN) {
-      appendMsg('me', name, msg);
-      socketRef.current.send(JSON.stringify({ name, msg }));
+      const message = JSON.stringify({ name, msg });
+      console.log('Sending message:', message);
+      socketRef.current.send(message); // Send message to the server
       msgInputRef.current.value = '';
+      appendMsg('me', name, msg);
+    } else {
+      console.error('WebSocket is not open. Message not sent.');
     }
   };
 
   const appendMsg = (cls, from, msg) => {
+    console.log(`Appending message: ${from}: ${msg}`);
     if (chatTextRef.current) {
       const chatEl = document.createElement('div');
       chatEl.innerHTML = `<span class="${cls}">${from}</span>: ${msg}`;
@@ -71,23 +76,22 @@ export function Chat() {
     }
   };
 
-  const hikerStatusRows =
-    Array.isArray(allHikerStatus) && allHikerStatus.length > 0
-      ? allHikerStatus.map((hiker, index) => (
-          <tr key={index}>
-            <td>
-              {hiker.name && hiker.name.includes('@')
-                ? hiker.name.split('@')[0]
-                : hiker.name || 'Guest'}
-            </td>
-            <td>{hiker.hikerStatus} Hikes Logged</td>
-          </tr>
-        ))
-      : (
-        <tr key="0">
-          <td colSpan="2">Be the first explorer!</td>
+  const hikerStatusRows = Array.isArray(allHikerStatus) && allHikerStatus.length > 0
+    ? allHikerStatus.map((hiker, index) => (
+        <tr key={index}>
+          <td>
+            {hiker.name && hiker.name.includes('@')
+              ? hiker.name.split('@')[0]
+              : hiker.name || 'Guest'}
+          </td>
+          <td>{hiker.hikerStatus} Hikes Logged</td>
         </tr>
-      );
+      ))
+    : (
+      <tr key="0">
+        <td colSpan="2">Be the first explorer!</td>
+      </tr>
+    );
 
   return (
     <main className="container-fluid bg-success text-center mt-5 pt-5 pb-3">
@@ -104,7 +108,7 @@ export function Chat() {
         <input id="new-msg" type="text" ref={msgInputRef} />
         <button onClick={sendMessage}>Send</button>
       </fieldset>
-      <div id="chat-text" ref={chatTextRef}></div>
+      <div id="chat-text" ref={chatTextRef} />
 
       <h2>Explorer Hiking Status</h2>
       <table className="table table-bordered text-white container hikerscoretable">
