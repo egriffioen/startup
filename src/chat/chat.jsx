@@ -32,10 +32,15 @@ export function Chat() {
       appendMsg('system', 'websocket', 'connected');
     };
 
-    socket.onmessage = (event) => {
+    socket.onmessage = async (event) => {
       console.log('Message received:', event.data);
-      const chat = JSON.parse(event.data);
-      appendMsg('hiker', chat.name, chat.msg); // Display incoming messages
+      const data = await event.data.text(); // Convert Blob to text
+      try {
+        const chat = JSON.parse(data);
+        appendMsg('hiker', chat.name, chat.msg); // Display incoming messages
+      } catch (error) {
+        console.error('Error parsing message:', error);
+      }
     };
 
     socket.onclose = () => {
@@ -61,7 +66,7 @@ export function Chat() {
       console.log('Sending message:', message);
       socketRef.current.send(message); // Send message to the server
       msgInputRef.current.value = '';
-      appendMsg('me', name, msg);
+      appendMsg('me', name, msg); // Display outgoing messages
     } else {
       console.error('WebSocket is not open. Message not sent.');
     }
