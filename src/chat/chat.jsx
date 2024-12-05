@@ -3,12 +3,11 @@ import './chat.css';
 
 export function Chat() {
   const [allHikerStatus, setAllHikerStatus] = useState([]);
+  const [userName, setUserName] = useState('');
   const chatTextRef = useRef(null);
-  const nameInputRef = useRef(null);
   const msgInputRef = useRef(null);
-  const socketRef = useRef(null); // Keep track of the WebSocket instance
+  const socketRef = useRef(null);
 
-  // Fetch hiker status when the component mounts
   useEffect(() => {
     fetch('/api/hikerStatus')
       .then((response) => response.json())
@@ -21,7 +20,18 @@ export function Chat() {
       });
   }, []);
 
-  // Set up WebSocket when the component mounts
+  useEffect(() => {
+    fetch('/api/auth/user')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Fetched user name:', data.name);
+        setUserName(data.name);
+      })
+      .catch((error) => {
+        console.error('Error fetching user name:', error);
+      });
+  }, []);
+
   useEffect(() => {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
     const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
@@ -34,10 +44,10 @@ export function Chat() {
 
     socket.onmessage = async (event) => {
       console.log('Message received:', event.data);
-      const data = await event.data.text(); // Convert Blob to text
+      const data = await event.data.text();
       try {
         const chat = JSON.parse(data);
-        appendMsg('hiker', chat.name, chat.msg); // Display incoming messages
+        appendMsg('hiker', chat.name, chat.msg);
       } catch (error) {
         console.error('Error parsing message:', error);
       }
@@ -60,13 +70,12 @@ export function Chat() {
 
   const sendMessage = () => {
     const msg = msgInputRef.current?.value;
-    const name = nameInputRef.current?.value || 'Guest';
     if (msg && socketRef.current?.readyState === WebSocket.OPEN) {
-      const message = JSON.stringify({ name, msg });
+      const message = JSON.stringify({ name: userName, msg });
       console.log('Sending message:', message);
-      socketRef.current.send(message); // Send message to the server
+      socketRef.current.send(message);
       msgInputRef.current.value = '';
-      appendMsg('me', name, msg); // Display outgoing messages
+      appendMsg('me', userName, msg);
     } else {
       console.error('WebSocket is not open. Message not sent.');
     }
@@ -101,15 +110,8 @@ export function Chat() {
   return (
     <main className="container-fluid bg-success text-center mt-5 pt-5 pb-3">
       <h2>Live Chat</h2>
-      <div className="name">
-        <fieldset id="name-controls">
-          <legend>Hiker Name</legend>
-          <input id="my-name" type="text" ref={nameInputRef} />
-        </fieldset>
-      </div>
 
       <fieldset id="chat-controls">
-        <legend>Chat</legend>
         <input id="new-msg" type="text" ref={msgInputRef} />
         <button onClick={sendMessage}>Send</button>
       </fieldset>
