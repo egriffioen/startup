@@ -6,10 +6,6 @@
 
 Are you tired of forgetting the most memorable moments from your favorite hikes? Do you wish you could be more connected with your hiking buddies? With this website you will be able to clearly log your favority memories about the hike, the difficulty, the mileage, how long it took you, and your overall rating of the hike on a 1-10 scale. The more hikes you go on, the higher "level" hiker you become. You will also be able to see your friends hiking levels and chat with them about your treacherous adventures. Go say hello to the world and never let another memory slip by.
 
-### Design
-
-![Screenshot 2024-09-14 161934](https://github.com/user-attachments/assets/3a41ff70-0360-406d-b88b-abe366966aae)
-
 
 ### Key features
 
